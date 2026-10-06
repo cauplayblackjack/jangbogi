@@ -1,0 +1,12 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>장보기 비서</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#1f6f43"><link rel="apple-touch-icon" href="icon-192.png">
+<style>body{margin:0;font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:#1f6f43;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center}
+.b{background:#fff;color:#1a1f1c;border-radius:18px;padding:28px 24px;width:min(360px,88vw);box-shadow:0 10px 30px #0004}h1{margin:0 0 6px;font-size:22px}p{color:#6b746f;margin:6px 0 18px;font-size:14px}
+a.btn{display:block;background:#1f6f43;color:#fff;text-decoration:none;padding:14px;border-radius:12px;font-weight:700;font-size:17px}a.btn.off{background:#9aa;pointer-events:none}.s{font-size:12px;color:#6b746f;margin-top:12px;white-space:pre-line}</style></head>
+<body><div class="b"><img src="icon-192.png" width="72" height="72" style="border-radius:16px"><h1>장보기 비서</h1><p id="msg">현재 주소를 확인하는 중...</p><a id="go" class="btn off" href="#">열기</a><div class="s" id="sub"></div></div>
+<script>
+const RAW='https://gist.githubusercontent.com/cauplayblackjack/ea0515e4670e63d9ae5cfd3e05ac2a2f/raw/jangbogi.json';
+async function load(){try{const r=await fetch(RAW+'?t='+Date.now(),{cache:'no-store'});const j=await r.json();const go=document.getElementById('go');go.href=j.url;go.className='btn';document.getElementById('msg').textContent='준비됐습니다. 아래 버튼을 누르세요.';document.getElementById('sub').textContent='주소 갱신: '+new Date(j.updatedAt).toLocaleString('ko-KR')+(j.online?'':'\n(PC 서버가 꺼져 있을 수 있어요)');
+if(location.hash!=='#stay'){setTimeout(()=>{location.replace(j.url)},1200)}}catch(e){document.getElementById('msg').textContent='주소를 불러오지 못했습니다. PC에서 서버(start.cmd)가 켜져 있는지 확인해 주세요.';setTimeout(load,5000)}}
+load();
+</script></body></html>
